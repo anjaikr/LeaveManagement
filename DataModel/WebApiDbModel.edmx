@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WebApiDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee_Master">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar(max)" />
+          <Property Name="EmployeeDOB" Type="datetime2" Precision="7" />
+          <Property Name="EmpAddress1" Type="varchar" MaxLength="500" />
+          <Property Name="EmpAddress2" Type="varchar(max)" />
+          <Property Name="EmpEmail" Type="varchar" MaxLength="100" />
+          <Property Name="EmpMobile" Type="varchar" MaxLength="10" />
+          <Property Name="EmpLandline" Type="varchar" MaxLength="20" />
+          <Property Name="DateofJoining" Type="datetime2" Precision="7" />
+          <Property Name="EmpPosition" Type="varchar" MaxLength="500" />
+          <Property Name="EmpRole" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Employee_Paypackage">
+          <Key>
+            <PropertyRef Name="EmpPkgId" />
+          </Key>
+          <Property Name="EmpPkgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="EmployeeBasicSal" Type="money" />
+          <Property Name="EmployeeHRA" Type="money" />
+          <Property Name="EmployeeSpecialAllowance" Type="money" />
+          <Property Name="EmployeeConveyanceAllowance" Type="money" />
+          <Property Name="EmployeeLTA" Type="money" />
+          <Property Name="EmployeeMedicalAllowance" Type="money" />
+          <Property Name="EmployeeEducationAllowance" Type="money" />
+          <Property Name="EmployeeTransportAllowance" Type="money" />
+          <Property Name="EmployeePF" Type="money" />
+          <Property Name="EmployeeProfessionalTax" Type="money" />
+        </EntityType>
+        <EntityType Name="Employee_Paypackage_Master">
+          <Key>
+            <PropertyRef Name="EmpPkgMstId" />
+          </Key>
+          <Property Name="EmpPkgMstId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="EmployeeCTC" Type="money" />
+          <Property Name="AnnaulIncrement" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="VPI" Type="money" />
+        </EntityType>
+        <EntityType Name="EmployeeRating">
+          <Key>
+            <PropertyRef Name="EmployeeRatingId" />
+          </Key>
+          <Property Name="EmployeeRatingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="ReportsTo" Type="int" />
+          <Property Name="RatingId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeReportsTo">
+          <Key>
+            <PropertyRef Name="EmpReportsToId" />
+          </Key>
+          <Property Name="EmpReportsToId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="ReportsTo" Type="int" />
+        </EntityType>
+        <EntityType Name="Leave_Master">
+          <Key>
+            <PropertyRef Name="LeaveId" />
+          </Key>
+          <Property Name="LeaveId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LeaveDetails" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Leave_Transaction">
+          <Key>
+            <PropertyRef Name="LeaveId" />
+          </Key>
+          <Property Name="LeaveId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="LeaveAllocated" Type="decimal" Precision="20" Scale="2" />
+          <Property Name="LeaveApplied" Type="int" />
+          <Property Name="LeaveUsed" Type="int" />
+          <Property Name="Leaveforwarded" Type="decimal" Precision="20" Scale="2" />
+          <Property Name="CompOff" Type="int" />
+          <Property Name="ApprovedBy" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RatingMaster">
+          <Key>
+            <PropertyRef Name="RatingId" />
+          </Key>
+          <Property Name="RatingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rating Description" Type="varchar" MaxLength="500" />
+          <Property Name="Rating Hikepercent" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Tokens">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AuthToken" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="IssuedOn" Type="datetime" Nullable="false" />
+          <Property Name="ExpiresOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_EmpId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Leave_Transaction" Type="Self.Leave_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Leave_Transaction">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeRatingId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeRating" Type="Self.EmployeeRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeRating">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpPkgId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Paypackage" Type="Self.Employee_Paypackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Employee_Paypackage">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpPkgMstId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Paypackage_Master" Type="Self.Employee_Paypackage_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Employee_Paypackage_Master">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpReportsToId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeReportsTo" Type="Self.EmployeeReportsTo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeReportsTo">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Tokens" Type="Self.Tokens" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebApiDbModelStoreContainer">
+          <EntitySet Name="Employee_Master" EntityType="Self.Employee_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Paypackage" EntityType="Self.Employee_Paypackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Paypackage_Master" EntityType="Self.Employee_Paypackage_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeRating" EntityType="Self.EmployeeRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeReportsTo" EntityType="Self.EmployeeReportsTo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave_Master" EntityType="Self.Leave_Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leave_Transaction" EntityType="Self.Leave_Transaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RatingMaster" EntityType="Self.RatingMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tokens" EntityType="Self.Tokens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EmpId" Association="Self.FK_EmpId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="Leave_Transaction" EntitySet="Leave_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeRatingId" Association="Self.FK_EmployeeRatingId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="EmployeeRating" EntitySet="EmployeeRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpPkgId" Association="Self.FK_EmpPkgId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="Employee_Paypackage" EntitySet="Employee_Paypackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpPkgMstId" Association="Self.FK_EmpPkgMstId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="Employee_Paypackage_Master" EntitySet="Employee_Paypackage_Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpReportsToId" Association="Self.FK_EmpReportsToId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="EmployeeReportsTo" EntitySet="EmployeeReportsTo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_User" Association="Self.FK_Tokens_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Tokens" EntitySet="Tokens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WebApiDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee_Master">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeDOB" Type="DateTime" Precision="7" />
+          <Property Name="EmpAddress1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EmpAddress2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EmpEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmpMobile" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EmpLandline" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DateofJoining" Type="DateTime" Precision="7" />
+          <Property Name="EmpPosition" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EmpRole" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Leave_Transaction" Relationship="Self.FK_EmpId" FromRole="Employee_Master" ToRole="Leave_Transaction" />
+          <NavigationProperty Name="EmployeeRatings" Relationship="Self.FK_EmployeeRatingId" FromRole="Employee_Master" ToRole="EmployeeRating" />
+          <NavigationProperty Name="Employee_Paypackage" Relationship="Self.FK_EmpPkgId" FromRole="Employee_Master" ToRole="Employee_Paypackage" />
+          <NavigationProperty Name="Employee_Paypackage_Master" Relationship="Self.FK_EmpPkgMstId" FromRole="Employee_Master" ToRole="Employee_Paypackage_Master" />
+          <NavigationProperty Name="EmployeeReportsToes" Relationship="Self.FK_EmpReportsToId" FromRole="Employee_Master" ToRole="EmployeeReportsTo" />
+        </EntityType>
+        <EntityType Name="Employee_Paypackage">
+          <Key>
+            <PropertyRef Name="EmpPkgId" />
+          </Key>
+          <Property Name="EmpPkgId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeBasicSal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeeHRA" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeeSpecialAllowance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeeConveyanceAllowance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeeLTA" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeeMedicalAllowance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeeEducationAllowance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeeTransportAllowance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeePF" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EmployeeProfessionalTax" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Employee_Master" Relationship="Self.FK_EmpPkgId" FromRole="Employee_Paypackage" ToRole="Employee_Master" />
+        </EntityType>
+        <EntityType Name="Employee_Paypackage_Master">
+          <Key>
+            <PropertyRef Name="EmpPkgMstId" />
+          </Key>
+          <Property Name="EmpPkgMstId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeCTC" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="AnnaulIncrement" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="VPI" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Employee_Master" Relationship="Self.FK_EmpPkgMstId" FromRole="Employee_Paypackage_Master" ToRole="Employee_Master" />
+        </EntityType>
+        <EntityType Name="EmployeeRating">
+          <Key>
+            <PropertyRef Name="EmployeeRatingId" />
+          </Key>
+          <Property Name="EmployeeRatingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="ReportsTo" Type="Int32" />
+          <Property Name="RatingId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee_Master" Relationship="Self.FK_EmployeeRatingId" FromRole="EmployeeRating" ToRole="Employee_Master" />
+        </EntityType>
+        <EntityType Name="EmployeeReportsTo">
+          <Key>
+            <PropertyRef Name="EmpReportsToId" />
+          </Key>
+          <Property Name="EmpReportsToId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="ReportsTo" Type="Int32" />
+          <NavigationProperty Name="Employee_Master" Relationship="Self.FK_EmpReportsToId" FromRole="EmployeeReportsTo" ToRole="Employee_Master" />
+        </EntityType>
+        <EntityType Name="Leave_Master">
+          <Key>
+            <PropertyRef Name="LeaveId" />
+          </Key>
+          <Property Name="LeaveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeaveDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Leave_Transaction">
+          <Key>
+            <PropertyRef Name="LeaveId" />
+          </Key>
+          <Property Name="LeaveId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="LeaveAllocated" Type="Decimal" Precision="20" Scale="2" />
+          <Property Name="LeaveApplied" Type="Int32" />
+          <Property Name="LeaveUsed" Type="Int32" />
+          <Property Name="Leaveforwarded" Type="Decimal" Precision="20" Scale="2" />
+          <Property Name="CompOff" Type="Int32" />
+          <Property Name="ApprovedBy" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee_Master" Relationship="Self.FK_EmpId" FromRole="Leave_Transaction" ToRole="Employee_Master" />
+        </EntityType>
+        <EntityType Name="RatingMaster">
+          <Key>
+            <PropertyRef Name="RatingId" />
+          </Key>
+          <Property Name="RatingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rating_Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Rating_Hikepercent" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="TokenId" />
+          </Key>
+          <Property Name="TokenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AuthToken" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IssuedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpiresOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Tokens_User" FromRole="Tokens" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tokens" Relationship="Self.FK_Tokens_User" FromRole="User" ToRole="Tokens" />
+        </EntityType>
+        <Association Name="FK_EmpId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Leave_Transaction" Type="Self.Leave_Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Leave_Transaction">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeRatingId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeRating" Type="Self.EmployeeRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeRating">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpPkgId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Paypackage" Type="Self.Employee_Paypackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Employee_Paypackage">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpPkgMstId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee_Paypackage_Master" Type="Self.Employee_Paypackage_Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="Employee_Paypackage_Master">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpReportsToId">
+          <End Role="Employee_Master" Type="Self.Employee_Master" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeReportsTo" Type="Self.EmployeeReportsTo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee_Master">
+              <PropertyRef Name="EmpId" />
+            </Principal>
+            <Dependent Role="EmployeeReportsTo">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tokens_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Tokens" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tokens">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebApiDbEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employee_Master" EntityType="Self.Employee_Master" />
+          <EntitySet Name="Employee_Paypackage" EntityType="Self.Employee_Paypackage" />
+          <EntitySet Name="Employee_Paypackage_Master" EntityType="Self.Employee_Paypackage_Master" />
+          <EntitySet Name="EmployeeRatings" EntityType="Self.EmployeeRating" />
+          <EntitySet Name="EmployeeReportsToes" EntityType="Self.EmployeeReportsTo" />
+          <EntitySet Name="Leave_Master" EntityType="Self.Leave_Master" />
+          <EntitySet Name="Leave_Transaction" EntityType="Self.Leave_Transaction" />
+          <EntitySet Name="RatingMasters" EntityType="Self.RatingMaster" />
+          <EntitySet Name="Tokens" EntityType="Self.Token" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_EmpId" Association="Self.FK_EmpId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="Leave_Transaction" EntitySet="Leave_Transaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeRatingId" Association="Self.FK_EmployeeRatingId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="EmployeeRating" EntitySet="EmployeeRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpPkgId" Association="Self.FK_EmpPkgId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="Employee_Paypackage" EntitySet="Employee_Paypackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpPkgMstId" Association="Self.FK_EmpPkgMstId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="Employee_Paypackage_Master" EntitySet="Employee_Paypackage_Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpReportsToId" Association="Self.FK_EmpReportsToId">
+            <End Role="Employee_Master" EntitySet="Employee_Master" />
+            <End Role="EmployeeReportsTo" EntitySet="EmployeeReportsToes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tokens_User" Association="Self.FK_Tokens_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Tokens" EntitySet="Tokens" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WebApiDbModelStoreContainer" CdmEntityContainer="WebApiDbEntities1">
+          <EntitySetMapping Name="Employee_Master">
+            <EntityTypeMapping TypeName="WebApiDbModel.Employee_Master">
+              <MappingFragment StoreEntitySet="Employee_Master">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeDOB" ColumnName="EmployeeDOB" />
+                <ScalarProperty Name="EmpAddress1" ColumnName="EmpAddress1" />
+                <ScalarProperty Name="EmpAddress2" ColumnName="EmpAddress2" />
+                <ScalarProperty Name="EmpEmail" ColumnName="EmpEmail" />
+                <ScalarProperty Name="EmpMobile" ColumnName="EmpMobile" />
+                <ScalarProperty Name="EmpLandline" ColumnName="EmpLandline" />
+                <ScalarProperty Name="DateofJoining" ColumnName="DateofJoining" />
+                <ScalarProperty Name="EmpPosition" ColumnName="EmpPosition" />
+                <ScalarProperty Name="EmpRole" ColumnName="EmpRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Paypackage">
+            <EntityTypeMapping TypeName="WebApiDbModel.Employee_Paypackage">
+              <MappingFragment StoreEntitySet="Employee_Paypackage">
+                <ScalarProperty Name="EmpPkgId" ColumnName="EmpPkgId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmployeeBasicSal" ColumnName="EmployeeBasicSal" />
+                <ScalarProperty Name="EmployeeHRA" ColumnName="EmployeeHRA" />
+                <ScalarProperty Name="EmployeeSpecialAllowance" ColumnName="EmployeeSpecialAllowance" />
+                <ScalarProperty Name="EmployeeConveyanceAllowance" ColumnName="EmployeeConveyanceAllowance" />
+                <ScalarProperty Name="EmployeeLTA" ColumnName="EmployeeLTA" />
+                <ScalarProperty Name="EmployeeMedicalAllowance" ColumnName="EmployeeMedicalAllowance" />
+                <ScalarProperty Name="EmployeeEducationAllowance" ColumnName="EmployeeEducationAllowance" />
+                <ScalarProperty Name="EmployeeTransportAllowance" ColumnName="EmployeeTransportAllowance" />
+                <ScalarProperty Name="EmployeePF" ColumnName="EmployeePF" />
+                <ScalarProperty Name="EmployeeProfessionalTax" ColumnName="EmployeeProfessionalTax" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Paypackage_Master">
+            <EntityTypeMapping TypeName="WebApiDbModel.Employee_Paypackage_Master">
+              <MappingFragment StoreEntitySet="Employee_Paypackage_Master">
+                <ScalarProperty Name="EmpPkgMstId" ColumnName="EmpPkgMstId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmployeeCTC" ColumnName="EmployeeCTC" />
+                <ScalarProperty Name="AnnaulIncrement" ColumnName="AnnaulIncrement" />
+                <ScalarProperty Name="VPI" ColumnName="VPI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeRatings">
+            <EntityTypeMapping TypeName="WebApiDbModel.EmployeeRating">
+              <MappingFragment StoreEntitySet="EmployeeRating">
+                <ScalarProperty Name="EmployeeRatingId" ColumnName="EmployeeRatingId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="ReportsTo" ColumnName="ReportsTo" />
+                <ScalarProperty Name="RatingId" ColumnName="RatingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeReportsToes">
+            <EntityTypeMapping TypeName="WebApiDbModel.EmployeeReportsTo">
+              <MappingFragment StoreEntitySet="EmployeeReportsTo">
+                <ScalarProperty Name="EmpReportsToId" ColumnName="EmpReportsToId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="ReportsTo" ColumnName="ReportsTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leave_Master">
+            <EntityTypeMapping TypeName="WebApiDbModel.Leave_Master">
+              <MappingFragment StoreEntitySet="Leave_Master">
+                <ScalarProperty Name="LeaveId" ColumnName="LeaveId" />
+                <ScalarProperty Name="LeaveDetails" ColumnName="LeaveDetails" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leave_Transaction">
+            <EntityTypeMapping TypeName="WebApiDbModel.Leave_Transaction">
+              <MappingFragment StoreEntitySet="Leave_Transaction">
+                <ScalarProperty Name="LeaveId" ColumnName="LeaveId" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="LeaveAllocated" ColumnName="LeaveAllocated" />
+                <ScalarProperty Name="LeaveApplied" ColumnName="LeaveApplied" />
+                <ScalarProperty Name="LeaveUsed" ColumnName="LeaveUsed" />
+                <ScalarProperty Name="Leaveforwarded" ColumnName="Leaveforwarded" />
+                <ScalarProperty Name="CompOff" ColumnName="CompOff" />
+                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RatingMasters">
+            <EntityTypeMapping TypeName="WebApiDbModel.RatingMaster">
+              <MappingFragment StoreEntitySet="RatingMaster">
+                <ScalarProperty Name="RatingId" ColumnName="RatingId" />
+                <ScalarProperty Name="Rating_Description" ColumnName="Rating Description" />
+                <ScalarProperty Name="Rating_Hikepercent" ColumnName="Rating Hikepercent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tokens">
+            <EntityTypeMapping TypeName="WebApiDbModel.Token">
+              <MappingFragment StoreEntitySet="Tokens">
+                <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AuthToken" ColumnName="AuthToken" />
+                <ScalarProperty Name="IssuedOn" ColumnName="IssuedOn" />
+                <ScalarProperty Name="ExpiresOn" ColumnName="ExpiresOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WebApiDbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

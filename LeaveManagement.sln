@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement", "LeaveManagement\LeaveManagement.csproj", "{32521F03-44C4-4271-8549-CAADBB7D165E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{77B7AA9E-E200-4F1C-A905-B1D76A848971} = {77B7AA9E-E200-4F1C-A905-B1D76A848971}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeaveManagement.Tests", "LeaveManagement.Tests\LeaveManagement.Tests.csproj", "{C2914D0D-0E02-4AF9-9C4F-8E143F2F8558}"
 EndProject

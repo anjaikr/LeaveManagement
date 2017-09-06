@@ -1,9 +1,9 @@
 using System.Web.Http;
 using AttributeRouting.Web.Http.WebHost;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(WebApi.AttributeRoutingHttpConfig), "Start")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof(LeaveManagement.AttributeRoutingHttpConfig), "Start")]
 
-namespace WebApi
+namespace LeaveManagement
 {
     public static class AttributeRoutingHttpConfig
     {
